@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:id="exampleChartPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="728.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+    <children>
+
+        <BorderPane fx:id="chartsPane" layoutX="336.0" layoutY="38.0" prefHeight="558.0" prefWidth="846.0">
+            <bottom>
+                <BarChart fx:id="barChart1" prefHeight="234.0" prefWidth="777.0" BorderPane.alignment="CENTER">
+                    <xAxis>
+                        <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis side="LEFT" />
+                    </yAxis>
+                </BarChart>
+            </bottom>
+            <center>
+                <LineChart fx:id="wykres" prefHeight="280.0" prefWidth="643.0" BorderPane.alignment="CENTER">
+                    <xAxis>
+                        <NumberAxis side="BOTTOM" fx:id="xAxis" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis fx:id="yAxis" prefHeight="190.0" prefWidth="0.0" side="LEFT" />
+                    </yAxis>
+                </LineChart>
+            </center>
+        </BorderPane>
+      <ComboBox fx:id="wybierzSygnal" layoutX="23.0" layoutY="45.0" onAction="#wybierzSygnalListener" prefHeight="25.0" prefWidth="278.0" promptText="Wybierz sygnał..." />
+      <Label layoutX="1294.0" layoutY="37.0" text="Wartość średnia" />
+      <TextField fx:id="wypiszWartoscSrednia" layoutX="1197.0" layoutY="58.0" prefHeight="25.0" prefWidth="278.0" promptText="Wartość średnia" />
+      <Label layoutX="1257.0" layoutY="93.0" text="Wartość średnia bezwzględna" />
+      <TextField fx:id="wypiszWartoscSredniaBezwzgledna" layoutX="1197.0" layoutY="114.0" prefHeight="25.0" prefWidth="278.0" promptText="Wartość średnia bezwzględna" />
+      <Label layoutX="1286.0" layoutY="151.0" text="Wartość skuteczna" />
+      <TextField fx:id="wypiszWartoscSkuteczna" layoutX="1197.0" layoutY="168.0" prefHeight="25.0" prefWidth="278.0" promptText="Wartość skuteczna" />
+      <Label layoutX="1283.0" layoutY="205.0" text="Wariancja sygnału" />
+      <TextField fx:id="wypiszWariancja" layoutX="1197.0" layoutY="223.0" prefHeight="25.0" prefWidth="278.0" promptText="Wariancja sygnału" />
+      <Label layoutX="1276.0" layoutY="261.0" text="Moć średnia sygnału" />
+      <TextField fx:id="wypiszMocSrednia" layoutX="1197.0" layoutY="281.0" prefHeight="25.0" prefWidth="278.0" promptText="Moć średnia sygnału" />
+      <TextField id="TFamplituda" fx:id="wpiszAmplituda" layoutX="155.0" layoutY="80.0" />
+      <Label layoutX="26.0" layoutY="84.0" prefHeight="17.0" prefWidth="123.0" text="Amplituda" />
+      <TextField fx:id="wpiszCzasPoczatkowy" layoutX="155.0" layoutY="114.0" />
+      <Label layoutX="26.0" layoutY="118.0" prefHeight="17.0" prefWidth="123.0" text="Czas początkowy" />
+      <TextField fx:id="wpiszCzasKoncowy" layoutX="155.0" layoutY="147.0" />
+      <Label layoutX="26.0" layoutY="151.0" prefHeight="17.0" prefWidth="123.0" text="Czas trwania" />
+      <TextField fx:id="wpiszOkres" layoutX="155.0" layoutY="181.0" />
+      <Label layoutX="26.0" layoutY="185.0" prefHeight="17.0" prefWidth="123.0" text="Okres" />
+      <TextField fx:id="wpiszWspolczynnik" layoutX="155.0" layoutY="214.0" />
+      <Label layoutX="26.0" layoutY="218.0" prefHeight="17.0" prefWidth="123.0" text="Współczynnik wyp." />
+      <TextField fx:id="wpiszCzasSkoku" layoutX="155.0" layoutY="248.0" />
+      <Label layoutX="26.0" layoutY="252.0" prefHeight="17.0" prefWidth="123.0" text="Czas skoku" />
+      <TextField fx:id="wpiszPrawdopodobienstwo" layoutX="155.0" layoutY="281.0" />
+      <Label layoutX="26.0" layoutY="285.0" prefHeight="17.0" prefWidth="123.0" text="Prawdopodbieństwo" />
+      <Button fx:id="buttonGeneruj" layoutX="25.0" layoutY="349.0" mnemonicParsing="false" onAction="#generujSygnal" prefHeight="25.0" prefWidth="278.0" text="Generuj" />
+      <Separator layoutX="25.0" layoutY="379.0" prefHeight="1.0" prefWidth="278.0" />
+      <ComboBox fx:id="wybierzPierwszySygnal" layoutX="25.0" layoutY="403.0" onAction="#wyborPierwszegoSygnalu" prefHeight="25.0" prefWidth="278.0" promptText="Wybierz pierwszy sygnał..." />
+      <Label layoutX="104.0" layoutY="381.0" text="Operacje na sygnałach" />
+      <ComboBox fx:id="wybierzDrugiSygnal" layoutX="25.0" layoutY="437.0" onAction="#wyborDrugiegoSygnalu" prefHeight="25.0" prefWidth="278.0" promptText="Wybierz drugi sygnał..." />
+      <Button fx:id="buttonDodaj" layoutX="25.0" layoutY="471.0" mnemonicParsing="false" onAction="#dodajSygnaly" prefHeight="25.0" prefWidth="54.0" text="+" />
+      <Button fx:id="buttonDzielenie" layoutX="249.0" layoutY="471.0" mnemonicParsing="false" onAction="#dzielenieSygnaly" prefHeight="25.0" prefWidth="54.0" text="/" />
+      <Button fx:id="buttonOdejmij" layoutX="100.0" layoutY="471.0" mnemonicParsing="false" onAction="#odemijSygnaly" prefHeight="25.0" prefWidth="61.0" text="-" />
+      <Button fx:id="buttonMnozenie" layoutX="174.0" layoutY="471.0" mnemonicParsing="false" onAction="#mnozenieSygnaly" prefHeight="25.0" prefWidth="54.0" text="*" />
+      <Separator layoutX="314.0" layoutY="35.0" orientation="VERTICAL" prefHeight="629.0" prefWidth="0.0" />
+      <Separator layoutX="1179.0" layoutY="35.0" orientation="VERTICAL" prefHeight="629.0" prefWidth="0.0" />
+      <Separator layoutX="22.0" layoutY="507.0" prefHeight="3.0" prefWidth="278.0" />
+      <Button fx:id="buttonZapiszSygnal" layoutX="22.0" layoutY="520.0" mnemonicParsing="false" onAction="#zapiszSygnal" prefHeight="25.0" prefWidth="123.0" text="Zapisz sygnał..." />
+      <Button fx:id="buttonWczytajSygnal" layoutX="169.0" layoutY="520.0" mnemonicParsing="false" onAction="#wczytajSygnal" prefHeight="25.0" prefWidth="132.0" text="Wczytaj sygnał..." />
+      <Separator layoutX="22.0" layoutY="555.0" prefHeight="3.0" prefWidth="278.0" />
+      <ComboBox fx:id="wybierzWyswietlanySygnal" layoutX="333.0" layoutY="607.0" onAction="#ktorySygnalWyswietlany" prefHeight="25.0" prefWidth="834.0" promptText="Wybierz wygenerowany sygnał do wyświetlenia..." />
+      <Button fx:id="buttonProbkowanie" layoutX="22.0" layoutY="567.0" mnemonicParsing="false" onAction="#probkojSygnal" prefHeight="25.0" prefWidth="123.0" text="Próbkowanie" />
+      <TextField fx:id="wpiszCzestotliwoscProbkowania" layoutX="154.0" layoutY="567.0" promptText="Hz" />
+      <TextField fx:id="wypiszWartoscSrednia1" layoutX="2464.0" layoutY="50.0" promptText="Wartość średnia" />
+      <Button fx:id="buttonKwantyzacja" layoutX="21.0" layoutY="606.0" mnemonicParsing="false" onAction="#kwantyzacjaSygnalu" prefHeight="25.0" prefWidth="123.0" text="Kwantyzajca" />
+      <TextField fx:id="wpiszPoziomKwantyzacji" layoutX="153.0" layoutY="606.0" promptText="Poziom" />
+      <Button fx:id="buttonInterpolacjaSinc" layoutX="22.0" layoutY="642.0" mnemonicParsing="false" onAction="#interpolacjaSinc" prefHeight="25.0" prefWidth="123.0" text="Sinc" />
+      <Label layoutX="1254.0" layoutY="314.0" text="Błąd średniokwadratowy (MSE)" />
+      <TextField fx:id="wypiszMSE" layoutX="1197.0" layoutY="336.0" prefHeight="25.0" prefWidth="278.0" promptText="Błąd średniokwadratowy (MSE)" />
+      <Label layoutX="1257.0" layoutY="371.0" text="Stosunek sygnał-szum (SNR)" />
+      <TextField fx:id="wypiszSNR" layoutX="1197.0" layoutY="392.0" prefHeight="25.0" prefWidth="278.0" promptText="Stosunek sygnał-szum (SNR)" />
+      <Label layoutX="1229.0" layoutY="425.0" text="Szczytowy stosunek sygnał - szum (PSNR)" />
+      <TextField fx:id="wypuszPSNR" layoutX="1197.0" layoutY="446.0" prefHeight="25.0" prefWidth="278.0" promptText="Szczytowy stosunek sygnał - szum (PSNR)" />
+      <Label layoutX="1263.0" layoutY="480.0" text="Maksymalna różnica (MD)" />
+      <TextField fx:id="wypiszMD" layoutX="1197.0" layoutY="501.0" prefHeight="25.0" prefWidth="278.0" promptText="Maksymalna różnica (MD)" />
+      <Label layoutX="1314.0" layoutY="537.0" text="ENOB" />
+      <TextField fx:id="wypiszENOB" layoutX="1197.0" layoutY="559.0" prefHeight="25.0" prefWidth="278.0" promptText="ENOB" />
+      <TextField fx:id="wpiszWartoscSinc" layoutX="154.0" layoutY="642.0" promptText="Hz" />
+      <TextField fx:id="wpiszCzestotliwosc" layoutX="156.0" layoutY="315.0" />
+      <Label layoutX="26.0" layoutY="319.0" prefHeight="17.0" prefWidth="123.0" text="Częstotliwość" />
+      <Button fx:id="buttonInterpolacja" layoutX="23.0" layoutY="678.0" mnemonicParsing="false" onAction="#ekstrapolacja" prefHeight="25.0" prefWidth="278.0" text="Ekstrapolacja" />
+      <Button fx:id="buttonWyczysc" layoutX="1197.0" layoutY="606.0" mnemonicParsing="false" onAction="#wyczyscWykres" prefHeight="25.0" prefWidth="278.0" text="Wyczyść wykres" />
+    </children>
+</Pane>
