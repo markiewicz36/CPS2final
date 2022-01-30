@@ -16,16 +16,18 @@ public class OperacjeAC {
     public OperacjeAC() {
     }
 
-    public SygnalDyskretny probkowanie(double czestotliwosc, Sygnal sygnal){
+    public SygnalDyskretny probkowanie(double czestotliwosc, Szum sygnal){
         SygnalDyskretny sygnalDyskretny = new SygnalDyskretny();
-        ArrayList<Point2D.Double> punkty = new ArrayList<>(); // Ilosc probek na jeden okres
+        ArrayList<Point2D.Double> probki = new ArrayList<>();
+        sygnalDyskretny.setCzestotliwosc(czestotliwosc);
 
-        int iterator = (int) (1/sygnal.getCzestotliwosc()*czestotliwosc);
 
-        for (int i = 0; i < sygnal.getData().size(); i+= iterator){
-            punkty.add(sygnal.getData().get(i));
+        int krok = (int) ((int) (1/sygnal.getCzestotliwosc())*czestotliwosc);
+
+        for (int i = 0; i < sygnal.getData().size(); i+= krok){
+            probki.add(sygnal.getData().get(i));
         }
-        sygnalDyskretny.setData(punkty);
+        sygnalDyskretny.setData(probki); // stare, przywrocic jak cos
         return sygnalDyskretny;
     }
 

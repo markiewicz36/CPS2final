@@ -11,6 +11,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -20,10 +21,13 @@ import Operacje.*;
 import javafx.stage.FileChooser;
 
 import javax.swing.plaf.FileChooserUI;
+import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.NoSuchElementException;
 
 public class Controller {
 
@@ -45,6 +49,10 @@ public class Controller {
     @FXML
     private TextField wpiszAmplituda;
 
+
+    @FXML
+    private CheckBox czyZaznaczonyHanning;
+
     @FXML
     private TextField wpiszCzasKoncowy;
 
@@ -59,6 +67,12 @@ public class Controller {
 
     @FXML
     private TextField wpiszOkres;
+
+    @FXML
+    private TextField wpiszWartoscM;
+
+    @FXML
+    private TextField wpiszWartoscFO;
 
     @FXML
     private TextField wpiszPrawdopodobienstwo;
@@ -378,8 +392,8 @@ public class Controller {
         Integer wybor2 = wybierzDrugiSygnal.getSelectionModel().getSelectedIndex();
         Szum szum2 = wygenerowaneSzumy.get(wybor2);
 
-        Operacje operations = new Operacje();
-        Szum szum3 = operations.dodawanie(szum1, szum2);
+        Operacje operacje = new Operacje();
+        Szum szum3 = operacje.operacje(szum1, szum2, 0);
 
         aktualnySzum = szum3;
         dodajSygnalDoListy(szum3, szum3.getClass().getSimpleName() + " po dodawaniu");
@@ -398,8 +412,8 @@ public class Controller {
         Integer wybor2 = wybierzDrugiSygnal.getSelectionModel().getSelectedIndex();
         Szum szum2 = wygenerowaneSzumy.get(wybor2);
 
-        Operacje operations = new Operacje();
-        Szum szum3 = operations.mnozenie(szum1, szum2);
+        Operacje operacje = new Operacje();
+        Szum szum3 = operacje.operacje(szum1, szum2, 2);
 
         aktualnySzum = szum3;
         dodajSygnalDoListy(szum3, szum3.getClass().getSimpleName() + " po dodawaniu");
@@ -417,8 +431,8 @@ public class Controller {
         Integer wybor2 = wybierzDrugiSygnal.getSelectionModel().getSelectedIndex();
         Szum szum2 = wygenerowaneSzumy.get(wybor2);
 
-        Operacje operations = new Operacje();
-        Szum szum3 = operations.odejmowanie(szum1, szum2);
+        Operacje operacje = new Operacje();
+        Szum szum3 = operacje.operacje(szum1, szum2, 1);
 
         aktualnySzum = szum3;
         dodajSygnalDoListy(szum3, szum3.getClass().getSimpleName() + " po dodawaniu");
@@ -436,8 +450,8 @@ public class Controller {
         Integer wybor2 = wybierzDrugiSygnal.getSelectionModel().getSelectedIndex();
         Szum szum2 = wygenerowaneSzumy.get(wybor2);
 
-        Operacje operations = new Operacje();
-        Szum szum3 = operations.dzielenie(szum1, szum2);
+        Operacje operacje = new Operacje();
+        Szum szum3 = operacje.operacje(szum1, szum2, 3);
 
         aktualnySzum = szum3;
         dodajSygnalDoListy(szum3, szum3.getClass().getSimpleName() + " po dodawaniu");
@@ -499,12 +513,15 @@ public class Controller {
     void probkojSygnal(ActionEvent event) {
         OperacjeAC operacjeAC = new OperacjeAC();
         ostatniSzumPrzedProbkowaniem = aktualnySzum;
-        Szum szum = operacjeAC.probkowanie(1/Double.parseDouble(wpiszCzestotliwoscProbkowania.getText()), (Sygnal) aktualnySzum);
-
+        Szum szum = operacjeAC.probkowanie(1/Double.parseDouble(wpiszCzestotliwoscProbkowania.getText()), aktualnySzum);
+        szum.setCzy_Dyskretny(true);
         aktualnySzum = szum;
         dodajSygnalDoListy(szum, "Probkowany sygnał");
+
         wykres.getStylesheets().add("Chart.css");
         wykres.setCreateSymbols(true);
+        /////////////////////////
+        wykres.getData().clear();
         generujWykres();
         generujHistogram();
     }
@@ -518,6 +535,8 @@ public class Controller {
         wykres.getStylesheets().add("GlobalChart.css");
         dodajSygnalDoListy(szum, "Kwantyzacja sygnału");
         wykres.setCreateSymbols(false);
+        /////////////////////////
+        wykres.getData().clear();
         generujWykres();
         generujHistogram();
 
@@ -554,6 +573,8 @@ public class Controller {
         wykres.getStylesheets().add("GlobalChart.css");
         dodajSygnalDoListy(szum, "Rekonstrukcja");
         wykres.setCreateSymbols(false);
+        /////////////////////////
+        wykres.getData().clear();
         generujWykres();
         generujHistogram();
 
@@ -584,6 +605,8 @@ public class Controller {
         wykres.getStylesheets().add("GlobalChart.css");
         dodajSygnalDoListy(szum, "Rekonstrukcja");
         wykres.setCreateSymbols(false);
+        /////////////////////////
+        wykres.getData().clear();
         generujWykres();
         generujHistogram();
 
@@ -605,5 +628,94 @@ public class Controller {
     public void wyczyscWykres(ActionEvent actionEvent) {
         wykres.getStylesheets().clear();
         wykres.getData().clear();
+    }
+
+    public void wykonajSplot(ActionEvent actionEvent) {
+        Integer wybor1 = wybierzPierwszySygnal.getSelectionModel().getSelectedIndex();
+        Szum szum1 = wygenerowaneSzumy.get(wybor1);
+
+        Integer wybor2 = wybierzDrugiSygnal.getSelectionModel().getSelectedIndex();
+        Szum szum2 = wygenerowaneSzumy.get(wybor2);
+
+        Operacje operacje = new Operacje();
+        Szum szum3 = operacje.operacje(szum1, szum2, 4);
+
+        aktualnySzum = szum3;
+        dodajSygnalDoListy(szum3, szum3.getClass().getSimpleName() + " po dodawaniu");
+        wykres.getData().clear();
+        generujWykres();
+        generujHistogram();
+    }
+
+    public void wykonajKorelacje(ActionEvent actionEvent) {
+        Integer wybor1 = wybierzPierwszySygnal.getSelectionModel().getSelectedIndex();
+        Szum szum1 = wygenerowaneSzumy.get(wybor1);
+
+        Integer wybor2 = wybierzDrugiSygnal.getSelectionModel().getSelectedIndex();
+        Szum szum2 = wygenerowaneSzumy.get(wybor2);
+
+        Operacje operacje = new Operacje();
+        Szum szum3 = operacje.operacje(szum1, szum2, 5);
+
+        aktualnySzum = szum3;
+        dodajSygnalDoListy(szum3, szum3.getClass().getSimpleName() + " po dodawaniu");
+        wykres.getData().clear();
+        generujWykres();
+        generujHistogram();
+    }
+
+    public void wykonajKorelacjeSplot(ActionEvent actionEvent) {
+        Integer wybor1 = wybierzPierwszySygnal.getSelectionModel().getSelectedIndex();
+        Szum szum1 = wygenerowaneSzumy.get(wybor1);
+
+        Integer wybor2 = wybierzDrugiSygnal.getSelectionModel().getSelectedIndex();
+        Szum szum2 = wygenerowaneSzumy.get(wybor2);
+
+        Operacje operacje = new Operacje();
+        Szum szum3 = operacje.operacje(szum1, szum2, 5);
+
+        aktualnySzum = szum3;
+        dodajSygnalDoListy(szum3, szum3.getClass().getSimpleName() + " po dodawaniu");
+        wykres.getData().clear();
+        generujWykres();
+        generujHistogram();
+    }
+
+    public void wykonajFiltrowanieDolnopasmowe(ActionEvent actionEvent){
+        Filtr  filtr = new Filtr();
+        Szum filtered = new Szum();
+
+        boolean czyHanning = czyZaznaczonyHanning.isSelected();
+
+        int M = Integer.parseInt(wpiszWartoscM.getText());
+        double fo = Double.parseDouble(wpiszWartoscFO.getText());
+
+        filtered = filtr.filtrDolnopasmowy(aktualnySzum, M, fo, czyHanning);
+        aktualnySzum = filtered;
+        dodajSygnalDoListy(filtered,"Filtered signal");
+        wykres.getData().clear();
+        wykres.getStylesheets().clear();
+        wykres.getStylesheets().add("Chart.css");
+        generujWykres();
+        generujHistogram();
+    }
+
+    public void wykonajFiltrowanieGornopasmowe(ActionEvent actionEvent){
+        Filtr  filtr = new Filtr();
+        Szum filtered = new Szum();
+
+        boolean czyHanning = czyZaznaczonyHanning.isSelected();
+
+        int M = Integer.parseInt(wpiszWartoscM.getText());
+        double fo = Double.parseDouble(wpiszWartoscFO.getText());
+
+        filtered = filtr.filtrGornopasmowy(aktualnySzum, M, fo);
+        aktualnySzum = filtered;
+        dodajSygnalDoListy(filtered,"Filtered signal");
+        wykres.getData().clear();
+        wykres.getStylesheets().clear();
+        wykres.getStylesheets().add("Chart.css");
+        generujWykres();
+        generujHistogram();
     }
 }

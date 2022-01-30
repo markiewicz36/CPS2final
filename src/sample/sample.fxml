@@ -5,6 +5,7 @@
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -71,7 +72,7 @@
       <Button fx:id="buttonDzielenie" layoutX="249.0" layoutY="471.0" mnemonicParsing="false" onAction="#dzielenieSygnaly" prefHeight="25.0" prefWidth="54.0" text="/" />
       <Button fx:id="buttonOdejmij" layoutX="100.0" layoutY="471.0" mnemonicParsing="false" onAction="#odemijSygnaly" prefHeight="25.0" prefWidth="61.0" text="-" />
       <Button fx:id="buttonMnozenie" layoutX="174.0" layoutY="471.0" mnemonicParsing="false" onAction="#mnozenieSygnaly" prefHeight="25.0" prefWidth="54.0" text="*" />
-      <Separator layoutX="314.0" layoutY="35.0" orientation="VERTICAL" prefHeight="629.0" prefWidth="0.0" />
+      <Separator layoutX="314.0" layoutY="35.0" orientation="VERTICAL" prefHeight="670.0" prefWidth="2.0" />
       <Separator layoutX="1179.0" layoutY="35.0" orientation="VERTICAL" prefHeight="629.0" prefWidth="0.0" />
       <Separator layoutX="22.0" layoutY="507.0" prefHeight="3.0" prefWidth="278.0" />
       <Button fx:id="buttonZapiszSygnal" layoutX="22.0" layoutY="520.0" mnemonicParsing="false" onAction="#zapiszSygnal" prefHeight="25.0" prefWidth="123.0" text="Zapisz sygnał..." />
@@ -80,7 +81,6 @@
       <ComboBox fx:id="wybierzWyswietlanySygnal" layoutX="333.0" layoutY="607.0" onAction="#ktorySygnalWyswietlany" prefHeight="25.0" prefWidth="834.0" promptText="Wybierz wygenerowany sygnał do wyświetlenia..." />
       <Button fx:id="buttonProbkowanie" layoutX="22.0" layoutY="567.0" mnemonicParsing="false" onAction="#probkojSygnal" prefHeight="25.0" prefWidth="123.0" text="Próbkowanie" />
       <TextField fx:id="wpiszCzestotliwoscProbkowania" layoutX="154.0" layoutY="567.0" promptText="Hz" />
-      <TextField fx:id="wypiszWartoscSrednia1" layoutX="2464.0" layoutY="50.0" promptText="Wartość średnia" />
       <Button fx:id="buttonKwantyzacja" layoutX="21.0" layoutY="606.0" mnemonicParsing="false" onAction="#kwantyzacjaSygnalu" prefHeight="25.0" prefWidth="123.0" text="Kwantyzajca" />
       <TextField fx:id="wpiszPoziomKwantyzacji" layoutX="153.0" layoutY="606.0" promptText="Poziom" />
       <Button fx:id="buttonInterpolacjaSinc" layoutX="22.0" layoutY="642.0" mnemonicParsing="false" onAction="#interpolacjaSinc" prefHeight="25.0" prefWidth="123.0" text="Sinc" />
@@ -99,5 +99,14 @@
       <Label layoutX="26.0" layoutY="319.0" prefHeight="17.0" prefWidth="123.0" text="Częstotliwość" />
       <Button fx:id="buttonInterpolacja" layoutX="23.0" layoutY="678.0" mnemonicParsing="false" onAction="#ekstrapolacja" prefHeight="25.0" prefWidth="278.0" text="Ekstrapolacja" />
       <Button fx:id="buttonWyczysc" layoutX="1197.0" layoutY="606.0" mnemonicParsing="false" onAction="#wyczyscWykres" prefHeight="25.0" prefWidth="278.0" text="Wyczyść wykres" />
+      <Button fx:id="buttonSplot" layoutX="333.0" layoutY="642.0" mnemonicParsing="false" onAction="#wykonajSplot" text="Splot" />
+      <Button fx:id="buttonKorelacja" layoutX="384.0" layoutY="642.0" mnemonicParsing="false" onAction="#wykonajKorelacje" text="Korelacja bezpośrednia" />
+      <Button fx:id="buttonKorelacjaSplot" layoutX="333.0" layoutY="678.0" mnemonicParsing="false" onAction="#wykonajKorelacjeSplot" text="Korelacja z użyciem splotu " />
+      <Button fx:id="buttonFilterDolnopasmowy" layoutX="549.0" layoutY="679.0" mnemonicParsing="false" onAction="#wykonajFiltrowanieDolnopasmowe" prefHeight="25.0" prefWidth="109.0" text="Dolnopasmowy" />
+      <Separator layoutX="533.0" layoutY="643.0" orientation="VERTICAL" prefHeight="63.0" prefWidth="1.0" />
+      <TextField fx:id="wpiszWartoscM" layoutX="549.0" layoutY="642.0" prefHeight="25.0" prefWidth="64.0" promptText="M" />
+      <TextField fx:id="wpiszWartoscFO" layoutX="627.0" layoutY="642.0" prefHeight="25.0" prefWidth="62.0" promptText="fo" />
+      <CheckBox fx:id="czyZaznaczonyHanning" layoutX="703.0" layoutY="646.0" mnemonicParsing="false" text="Hanning" />
+      <Button fx:id="buttonFilterGornopasmowy" layoutX="663.0" layoutY="678.0" mnemonicParsing="false" onAction="#wykonajFiltrowanieGornopasmowe" prefHeight="25.0" prefWidth="109.0" text="Górnopasmowy" />
     </children>
 </Pane>

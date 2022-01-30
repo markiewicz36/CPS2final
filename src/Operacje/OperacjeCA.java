@@ -54,7 +54,7 @@ public class OperacjeCA {
 
 
         double czasTrwania = szum.getData().get(szum.getData().size()-1).getX() - szum.getData().get(0).getX();
-        double step = czasTrwania / iloscProbek;
+        double step = czasTrwania / iloscProbek ;
 
 
         // wypelnienie wstepne z punktami na osi X
@@ -97,7 +97,6 @@ public class OperacjeCA {
 
         double step = koniec / szum.getData().size();
 
-        System.out.println(koniec);
         //sumując wartości wszystkich funkcji sinc dla każdego indeksu reprezentowanego przez próbkę, otrzymamy dokładnie wartości sygnału
         double sum = 0.0;
         for (int i = pierwszaProbka; i < ostatniaProbka; i++) {
