@@ -108,5 +108,7 @@
       <TextField fx:id="wpiszWartoscFO" layoutX="627.0" layoutY="642.0" prefHeight="25.0" prefWidth="62.0" promptText="fo" />
       <CheckBox fx:id="czyZaznaczonyHanning" layoutX="703.0" layoutY="646.0" mnemonicParsing="false" text="Hanning" />
       <Button fx:id="buttonFilterGornopasmowy" layoutX="663.0" layoutY="678.0" mnemonicParsing="false" onAction="#wykonajFiltrowanieGornopasmowe" prefHeight="25.0" prefWidth="109.0" text="Górnopasmowy" />
+      <Button fx:id="buttonPrzeusniecie" layoutX="1197.0" layoutY="655.0" mnemonicParsing="false" onAction="#przesunSygnal" text="Przesunięcie sygnału" />
+      <TextField fx:id="wpiszPrzesuniecie" layoutX="1336.0" layoutY="655.0" prefHeight="25.0" prefWidth="139.0" />
     </children>
 </Pane>

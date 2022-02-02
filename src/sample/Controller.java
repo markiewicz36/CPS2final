@@ -87,6 +87,9 @@ public class Controller {
     private TextField wpiszCzestotliwosc;
 
     @FXML
+    private TextField wpiszPrzesuniecie;
+
+    @FXML
     private ComboBox wybierzSygnal;
 
     @FXML
@@ -214,7 +217,7 @@ public class Controller {
                         Double.parseDouble(wpiszOkres.getText()),
                         Double.parseDouble(wpiszCzasPoczatkowy.getText()),
                         Double.parseDouble(wpiszCzasKoncowy.getText()));
-                case 4 -> szum = new SygnalSinusoidalnyWyprostowanyJednopolowkowo(Double.parseDouble(wpiszAmplituda.getText()),
+                case 4 -> szum = new SygnalCos(Double.parseDouble(wpiszAmplituda.getText()),
                         Double.parseDouble(wpiszOkres.getText()),
                         Double.parseDouble(wpiszCzasPoczatkowy.getText()),
                         Double.parseDouble(wpiszCzasKoncowy.getText()));
@@ -715,6 +718,18 @@ public class Controller {
         wykres.getData().clear();
         wykres.getStylesheets().clear();
         wykres.getStylesheets().add("Chart.css");
+        generujWykres();
+        generujHistogram();
+    }
+
+    public void przesunSygnal(ActionEvent actionEvent) {
+        double przesuniecie = Double.parseDouble(wpiszPrzesuniecie.getText());
+        Operacje operacje = new Operacje();
+        Szum szum3 = operacje.przesuniecieSygnalu(aktualnySzum, przesuniecie);
+
+        aktualnySzum = szum3;
+        dodajSygnalDoListy(szum3, szum3.getClass().getSimpleName() + " przesuniety");
+        wykres.getData().clear();
         generujWykres();
         generujHistogram();
     }

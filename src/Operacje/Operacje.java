@@ -146,6 +146,8 @@ public class Operacje {
         return signal;
     }
 
+
+
     private double obliczSplot(ArrayList<Point2D.Double> szum1,ArrayList<Point2D.Double> szum2, int index){
         Double result = 0.0;
 
@@ -164,6 +166,21 @@ public class Operacje {
             }
         }
         return result;
+    }
+
+    public Szum przesuniecieSygnalu(Szum szum1, double przesuniecie) {
+        Szum signal = new Szum();
+        ArrayList<Point2D.Double> samples = new ArrayList<>();
+
+        for (int i = 0; i < szum1.getData().size(); i++) {
+            Point2D.Double tmp = new Point2D.Double();
+            tmp.x = szum1.getData().get(i).x - przesuniecie;
+            tmp.y = szum1.getData().get(i).getY();
+            samples.add(tmp);
+        }
+        signal.setData(samples);
+
+        return signal;
     }
 //
 //    public Szum dodawanie(Szum szum1, Szum szum2) throws ZlyRozmiar, ZlaCzestotliwosc {
