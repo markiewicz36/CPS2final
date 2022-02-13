@@ -214,25 +214,26 @@ public class Controller {
                         Double.parseDouble(wpiszCzasPoczatkowy.getText()),
                         Double.parseDouble(wpiszCzasKoncowy.getText()));
                 case 3 -> szum = new SygnalSinusoidalny(Double.parseDouble(wpiszAmplituda.getText()),
-                        Double.parseDouble(wpiszOkres.getText()),
+                        1 / Double.parseDouble(wpiszOkres.getText()),
                         Double.parseDouble(wpiszCzasPoczatkowy.getText()),
                         Double.parseDouble(wpiszCzasKoncowy.getText()));
                 case 4 -> szum = new SygnalCos(Double.parseDouble(wpiszAmplituda.getText()),
-                        Double.parseDouble(wpiszOkres.getText()),
+                        1 / Double.parseDouble(wpiszOkres.getText()),
                         Double.parseDouble(wpiszCzasPoczatkowy.getText()),
-                        Double.parseDouble(wpiszCzasKoncowy.getText()));
+                        Double.parseDouble(wpiszCzasKoncowy.getText()),
+                        Double.parseDouble(wpiszPrzesuniecie.getText()));
                 case 5 -> szum = new SygnalSinusoidalnyWyprostowanyDwupolowkowo(Double.parseDouble(wpiszAmplituda.getText()),
-                        Double.parseDouble(wpiszOkres.getText()),
+                        1 / Double.parseDouble(wpiszOkres.getText()),
                         Double.parseDouble(wpiszCzasPoczatkowy.getText()),
                         Double.parseDouble(wpiszCzasKoncowy.getText()));
                 case 6 -> szum = new SygnalProstokatny(Double.parseDouble(wpiszAmplituda.getText()),
-                        Double.parseDouble(wpiszOkres.getText()),
+                        1 / Double.parseDouble(wpiszOkres.getText()),
                         Double.parseDouble(wpiszCzasPoczatkowy.getText()),
                         Double.parseDouble(wpiszCzasKoncowy.getText()),
                         Double.parseDouble(wpiszWspolczynnik.getText()));
                 case 7 -> {
                     szum = new SygnalProstokatnySymetryczny(Double.parseDouble(wpiszAmplituda.getText()),
-                            Double.parseDouble(wpiszOkres.getText()),
+                            1 / Double.parseDouble(wpiszOkres.getText()),
                             Double.parseDouble(wpiszCzasPoczatkowy.getText()),
                             Double.parseDouble(wpiszCzasKoncowy.getText()),
                             Double.parseDouble(wpiszWspolczynnik.getText()));
@@ -240,12 +241,10 @@ public class Controller {
                 }
                 case 8 -> {
                     szum = new SygnalTrojkatny(Double.parseDouble(wpiszAmplituda.getText()),
-                            Double.parseDouble(wpiszOkres.getText()),
+                            1 / Double.parseDouble(wpiszOkres.getText()),
                             Double.parseDouble(wpiszCzasPoczatkowy.getText()),
                             Double.parseDouble(wpiszCzasKoncowy.getText()),
-                            Double.parseDouble(wpiszWspolczynnik.getText()));
-                    ;
-                }
+                            Double.parseDouble(wpiszWspolczynnik.getText()));; }
                 case 9 -> szum = new SkokJednostkowy(Double.parseDouble(wpiszAmplituda.getText()),
                         Double.parseDouble(wpiszCzasPoczatkowy.getText()),
                         Double.parseDouble(wpiszCzasKoncowy.getText()),
@@ -712,7 +711,7 @@ public class Controller {
         int M = Integer.parseInt(wpiszWartoscM.getText());
         double fo = Double.parseDouble(wpiszWartoscFO.getText());
 
-        filtered = filtr.filtrGornopasmowy(aktualnySzum, M, fo);
+        filtered = filtr.filtrGornopasmowy(aktualnySzum, M, fo, czyHanning);
         aktualnySzum = filtered;
         dodajSygnalDoListy(filtered,"Filtered signal");
         wykres.getData().clear();
@@ -722,15 +721,15 @@ public class Controller {
         generujHistogram();
     }
 
-    public void przesunSygnal(ActionEvent actionEvent) {
-        double przesuniecie = Double.parseDouble(wpiszPrzesuniecie.getText());
-        Operacje operacje = new Operacje();
-        Szum szum3 = operacje.przesuniecieSygnalu(aktualnySzum, przesuniecie);
-
-        aktualnySzum = szum3;
-        dodajSygnalDoListy(szum3, szum3.getClass().getSimpleName() + " przesuniety");
-        wykres.getData().clear();
-        generujWykres();
-        generujHistogram();
-    }
+//    public void przesunSygnal(ActionEvent actionEvent) {
+//        double przesuniecie = Double.parseDouble(wpiszPrzesuniecie.getText());
+//        Operacje operacje = new Operacje();
+//        Szum szum3 = operacje.przesuniecieSygnalu(aktualnySzum, przesuniecie);
+//
+//        aktualnySzum = szum3;
+//        dodajSygnalDoListy(szum3, szum3.getClass().getSimpleName() + " przesuniety");
+//        wykres.getData().clear();
+//        generujWykres();
+//        generujHistogram();
+//    }
 }

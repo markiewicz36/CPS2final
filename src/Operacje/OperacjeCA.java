@@ -25,10 +25,15 @@ public class OperacjeCA {
         double y = 0;
 
         for(int i = 0; i < przed.getData().size(); i++){
-            if(tmpx < szum.getData().size()){
+            if(tmpx < szum.getData().size()) {
                 double orginalX = przed.getData().get(i).x;
                 double qaX = szum.getData().get(tmpx).x;
-                if(Math.abs(orginalX - qaX) < 0.000001d){
+
+
+
+                if (Math.abs(orginalX - qaX) < 0.000001d) {
+
+                    System.out.println("test" + i);
                     currrent = szum.getData().get(tmpx).y;
                     y = currrent;
                     tmpx++;
@@ -39,6 +44,7 @@ public class OperacjeCA {
             tmp.y = y;
             probki.add(tmp);
         }
+        System.out.println(probki);
 
         szum1.setData(probki);
         return szum1;

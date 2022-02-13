@@ -3,6 +3,7 @@ package Operacje;
 import Szumy.Szum;
 
 import java.awt.geom.Point2D;
+import java.nio.channels.Pipe;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -84,8 +85,9 @@ public class Operacje {
         Collections.reverse(tmp);
         szum1.setData(tmp);
         return splot(szum1, szum2);
-
     }
+
+
 
     public Szum korelacja(Szum szum1, Szum szum2) {
         Szum szum = new Szum();
@@ -103,7 +105,9 @@ public class Operacje {
                 + drugi.getData().get(drugi.getData().size() - 1).getX() - drugi.getData().get(0).getX())
                 / (pierwszy.getData().size() + drugi.getData().size());
 
+
         int iteracje = 0;
+
         for (int i = -(drugi.getData().size() - 1); i < pierwszy.getData().size(); i++) {
             Point2D.Double tmp = new Point2D.Double();
             tmp.x = iteracje * step;
@@ -111,22 +115,27 @@ public class Operacje {
             tmp.y = obliczKorelacje(pierwszy, drugi, i);
             probki.add(tmp);
         }
+
         szum.setData(probki);
-        szum.setCzestotliwosc(step);
+        //szum.setCzestotliwosc(100);
+
         return szum;
     }
 
-    private double obliczKorelacje(Szum probki1, Szum probki2, int index){
-        Double wynik = 0.0;
+    private double obliczKorelacje(Szum sygnal1, Szum sygnal2, int index){
+        double wynik = 0.0;
 
-        for (int i = 0; i < probki1.getData().size(); i++) {
+        for (int i = 0; i < sygnal1.getData().size(); i++) {
             double secondY = 0.0;
-            if (i - index < probki2.getData().size() && i - index >= 0) secondY = probki2.getData().get(i - index).getY();
-            wynik += probki1.getData().get(i).getY() * secondY;
+            if (i - index < sygnal2.getData().size() && i - index >= 0){
+                secondY = sygnal2.getData().get(i - index).getY();
+            }
+            wynik += sygnal1.getData().get(i).getY() * secondY;
         }
 
         return wynik;
     }
+
 
     public Szum splot(Szum szum1, Szum szum2) {
         Szum signal = new Szum();
@@ -161,7 +170,8 @@ public class Operacje {
         } else {
             for (int i = 0; i < szum2.size(); i++) {
                 double firstY = 0.0;
-                if ((index - i) >= 0 && index - i < szum1.size()) firstY = szum1.get(index - i).getY();
+                if ((index - i) >= 0 && index - i < szum1.size())
+                    firstY = szum1.get(index - i).getY();
                 result += szum2.get(i).getY() * firstY;
             }
         }
@@ -314,6 +324,65 @@ public class Operacje {
 //        finalNoise.setCzestotliwosc(szum1.getCzestotliwosc());
 //
 //        return finalNoise;
+//    }
+
+//    public Szum korelacja1(Szum szum1, Szum szum2){
+//        ArrayList<Point2D.Double> probki = new ArrayList<>();
+//        Szum szum = new Szum();
+//        int maxPierwszy = szum1.getData().size()-1;
+//        int maxDrugi = szum2.getData().size()-1;
+//
+//        double sampling = Math.abs(szum1.getData().get(1).getX() - szum1.getData().get(0).getX());
+//
+//        int maxKorelacja = maxPierwszy + maxDrugi;
+//
+//
+//        for (int i = 0; i <= maxKorelacja; i++){
+//            double h = 0.0;
+//            double t;
+//            if(i <= maxPierwszy){
+//                t = szum1.getData().get(i).getX();
+//            }
+//            else {
+//                t = szum1.getData().get(maxPierwszy).getX() + ((i - maxPierwszy) * sampling);
+//            }
+//            int drugiIndex = maxDrugi;
+//            while (drugiIndex >= 0){
+//                int pierwszyIndex = i - maxDrugi + drugiIndex;
+//                if(pierwszyIndex <= maxPierwszy && pierwszyIndex >=0){
+//                    h += getYbyX(szum1, szum1.getData().get(pierwszyIndex).getX()) * getYbyX(szum2, szum2.getData().get(drugiIndex).getX());
+//                }
+//                drugiIndex--;
+//            }
+//            Point2D.Double tmp = new Point2D.Double();
+//            tmp.x = t;
+//            tmp.y = h;
+//            probki.add(tmp);
+//        }
+//        szum.setData(probki);
+//        double najwyzszy = 0;
+//        double najwyzszyX = 0;
+//
+//        for (int i = 0; i < szum.getData().size(); i++) {
+//            if(szum.getData().get(i).y > najwyzszy){
+//                najwyzszy = szum.getData().get(i).y;
+//                najwyzszyX = szum.getData().get(i).x;
+//            }
+//        }
+//        double tmp = (szum.getCzas_trwania()/2) - najwyzszyX;
+//        System.out.println(tmp);
+//
+//
+//        return szum;
+//    }
+//
+//    double getYbyX (Szum szum1 ,double x){
+//        for(int i = 0; i < szum1.getData().size(); i++){
+//            if(Math.abs(szum1.getData().get(i).getX() - x) < 0.00000001d){
+//                return szum1.getData().get(i).getY();
+//            }
+//        }
+//        return 0;
 //    }
 
 }
