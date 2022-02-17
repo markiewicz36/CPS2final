@@ -6,6 +6,8 @@ import Sygnaly.*;
 import Szumy.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -19,6 +21,7 @@ import javafx.scene.layout.Pane;
 
 import Operacje.*;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import javax.swing.plaf.FileChooserUI;
 import java.awt.geom.Point2D;
@@ -719,6 +722,27 @@ public class Controller {
         wykres.getStylesheets().add("Chart.css");
         generujWykres();
         generujHistogram();
+    }
+
+    public void obliczTransformate(ActionEvent actionEvent) {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/dft.fxml"));
+
+        Pane dftChart = null;
+        DTFController dftChartController;
+
+        try {
+            dftChart = loader.load();
+            dftChartController = loader.getController();
+            dftChartController.initData(aktualnySzum);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene scene = new Scene(dftChart);
+        stage.setScene(scene);
+        stage.setTitle("DFT CHARTS");
+        stage.show();
     }
 
 //    public void przesunSygnal(ActionEvent actionEvent) {
